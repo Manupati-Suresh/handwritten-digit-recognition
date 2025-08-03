@@ -1,7 +1,6 @@
 
 import streamlit as st
 import numpy as np
-import pandas as pd
 import pickle
 import os
 import logging
@@ -211,19 +210,18 @@ def main():
                             
                             # Show confidence scores
                             st.subheader("📊 Confidence Scores")
-                            scores_df = pd.DataFrame({
-                                'Digit': range(10),
-                                'Score': confidence_scores
-                            })
-                            scores_df = scores_df.sort_values('Score', ascending=False)
+                            
+                            # Create data for visualization
+                            scores_data = {f"Digit {i}": confidence_scores[i] for i in range(10)}
                             
                             # Create bar chart
-                            st.bar_chart(scores_df.set_index('Digit')['Score'])
+                            st.bar_chart(scores_data)
                             
                             # Show top 3 predictions
                             st.write("**Top 3 Predictions:**")
-                            for i, (_, row) in enumerate(scores_df.head(3).iterrows()):
-                                st.write(f"{i+1}. Digit {int(row['Digit'])}: {row['Score']:.3f}")
+                            sorted_scores = sorted(enumerate(confidence_scores), key=lambda x: x[1], reverse=True)
+                            for i, (digit, score) in enumerate(sorted_scores[:3]):
+                                st.write(f"{i+1}. Digit {digit}: {score:.3f}")
                                 
                         except Exception as e:
                             logger.error(f"Prediction error: {str(e)}")
