@@ -7,6 +7,7 @@ import logging
 from PIL import Image, ImageOps
 from typing import Optional
 import io
+from simple_model import SimpleDigitClassifier
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)

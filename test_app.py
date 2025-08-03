@@ -7,6 +7,7 @@ from PIL import Image
 import pickle
 import os
 import sys
+from simple_model import SimpleDigitClassifier
 
 def test_model_loading():
     """Test if model can be loaded correctly."""
